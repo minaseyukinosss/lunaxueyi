@@ -1,0 +1,23 @@
+{
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "nuxt": "^3.2.3",
+    "nuxt-windicss": "^2.6.0",
+    "sass": "^1.59.2",
+    "sass-loader": "^13.2.0"
+  },
+  "dependencies": {
+    "howler": "^2.2.3",
+    "nuxt-icon": "^0.3.3",
+    "swiper": "^8.4.4",
+    "three": "^0.151.3",
+    "vanta": "^0.5.24"
+  }
+}

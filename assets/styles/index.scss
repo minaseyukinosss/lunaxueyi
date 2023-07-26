@@ -1,0 +1,102 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  // 修改光标样式
+  cursor: url(~/assets/images/default.cur), default;
+}
+
+body,
+html,
+div,
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+header,
+section,
+footer,
+table,
+form,
+ul,
+li,
+img {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  // font-size: 16px;
+  font-size: clamp(12px, 1.2rem, 16px); /* 这里的14px是最小字体大小，16px是最大字体大小 */
+  word-spacing: 1px;
+}
+
+ul {
+  list-style: none;
+}
+
+body {
+  color: rgb(62, 62, 62);
+  font-size: 16px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+    'Noto Color Emoji';
+  font-family: DM Sans-Bold, DM Sans;
+}
+
+img {
+  pointer-events: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+.main-container {
+  margin: 0 auto;
+  max-width: 100%;
+  width: 1140px;
+}
+
+.wow {
+  visibility: hidden;
+}
+
+// :root {
+//   // todo 多个尺寸
+//   @media screen and (min-width: 1000px) {
+//     font-size: 6.95vw;
+//   }
+//   @media screen and (max-width: 750px) {
+//     font-size: 13.333333vw;
+//   }
+// }
+
+// :root {
+//   @media screen and (min-width: 1201px) {
+//     --container-width: 1140px;
+//   }
+
+//   @media screen and (max-width: 1200px) {
+//     // font-size: 13px;
+//     --container-width: 1040px;
+//   }
+
+//   @media screen and (max-width: 1000px) {
+//     // font-size: 12px;
+//     --container-width: calc(100vw - 2.8rem);
+//   }
+
+//   @media screen and (max-width: 765px) {
+//     --container-width: calc(100vw - 2rem);
+//     h5 {
+//       // font-size: 1.45rem !important;
+//     }
+//   }
+// }
