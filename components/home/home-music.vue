@@ -8,67 +8,66 @@
     rel="stylesheet"
   />
   <div class="music">
-  <div class="bubble pink-bubble"></div>
-  <div class="bubble blue-bubble"></div>
-  <div class="bubble small-p-bubble"></div>
-  <div class="bubble small-b-bubble"></div>
-  <div class="music__wrap">
-    <div class="music-item music-menu">
-      <div class="header">
-        <div class="discover">MUSIC</div>
-        <div class="menu-line"></div>
+    <div class="bubble pink-bubble"></div>
+    <div class="bubble blue-bubble"></div>
+    <div class="bubble small-p-bubble"></div>
+    <div class="bubble small-b-bubble"></div>
+    <div class="music__wrap">
+      <div class="music-item music-menu">
+        <div class="header">
+          <div class="discover">MUSIC</div>
+          <div class="menu-line"></div>
+        </div>
+        <music-bar ref="musicBarRef" 
+          :progress-dom="progressRef" 
+          @update-timer="onUpdateTimer"
+          @update-duration="onUpdateDuration"
+          @change-music="onChangeMusic"
+        />
       </div>
-      <music-bar ref="musicBarRef" 
-        :progress-dom="progressRef" 
-        @update-timer="onUpdateTimer"
-        @update-duration="onUpdateDuration"
-        @change-music="onChangeMusic"
-      />
+      <div class="music-item music-player mt-16">
+        <div class="player-header">
+          <div class="back-arrow" />
+          <div class="now-play">NOW PLAYING</div>
+          <div class="double-dot">
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+        </div>
+        <div class="player-content">
+          <!-- 音乐唱片效果 -->
+          <img class="album-img" :src="albumImg" ref="albumImgRef" />
+          <div class="album-decorate"></div>
+          <div class="album-decorate__small"></div>
+          <!-- 播放音乐信息 -->
+          <div class="song-detail">
+            <div class="song-name">{{ music.name }}</div>
+            <!-- <div class="song-desc">{{ music.desc }}</div> -->
+          </div>
+          <!-- 歌词 -->
+          <div ref="lyricsContainer" class="music-lyrics">
+            <p v-for="(item, index) in musicLyric" 
+              :key="index" 
+              :data-index="index" 
+              :ref="(el) => onSetLyricRef(el, index)"
+              :class="{'active': lyricIndex === index}"
+            >
+              <span>{{ item.lineLyric }}</span>
+            </p>
+          </div>
+          <!-- 播放进度条 -->
+          <div class="music-progress">
+            <div class="progress" ref="progressRef"></div>
+          </div>
+          <div class="music-duration">
+            <div class="timer mr-1">{{ timer.formatTime }}</div>
+            <Icon class="arrow" name="ic:sharp-near-me" />
+            <div class="duration ml-1">{{ duration }}</div>
+          </div>
+        </div>
+      </div> 
     </div>
-    <div class="music-item music-player mt-16">
-      <div class="player-header">
-        <div class="back-arrow" />
-        <div class="now-play">NOW PLAYING</div>
-        <div class="double-dot">
-          <div class="dot"></div>
-          <div class="dot"></div>
-        </div>
-      </div>
-      <div class="player-content">
-        <!-- 音乐唱片效果 -->
-        <img class="album-img" :src="albumImg" ref="albumImgRef" />
-        <div class="album-decorate"></div>
-        <div class="album-decorate__small"></div>
-        <!-- 播放音乐信息 -->
-        <div class="song-detail">
-          <div class="song-name">{{ music.name }}</div>
-          <!-- <div class="song-desc">{{ music.desc }}</div> -->
-        </div>
-        <!-- 歌词 -->
-        <div ref="lyricsContainer" class="music-lyrics">
-          <p v-for="(item, index) in musicLyric" 
-            :key="index" 
-            :data-index="index" 
-            :ref="(el) => onSetLyricRef(el, index)"
-            :class="{'active': lyricIndex === index}"
-          >
-            <span>{{ item.lineLyric }}</span>
-          </p>
-        </div>
-        <!-- 播放进度条 -->
-        <div class="music-progress">
-          <div class="progress" ref="progressRef"></div>
-        </div>
-        <div class="music-duration">
-          <div class="timer mr-1">{{ timer.formatTime }}</div>
-          <Icon class="arrow" name="ic:sharp-near-me" />
-          <div class="duration ml-1">{{ duration }}</div>
-        </div>
-      </div>
-    </div> 
   </div>
-</div>
-
 </template>
 <script setup name="HomeMusic">
 import musicBar from './components/music-bar.vue'
@@ -96,7 +95,7 @@ const onUpdateTimer = (timeInfo) => {
   timer.value = timeInfo
 }
 
-const duration = ref('0:00')
+const duration = ref('2:57')
 
 const onUpdateDuration = (data) => {
   duration.value = data
@@ -113,7 +112,7 @@ const onSetLyricRef = (el, index) => {
 const lyricIndex = ref(null)
 
 // 处理歌词高亮
-const handleLyricScroll = async (time) => {
+const handleLyricActive = async (time) => {
   for (let i = musicLyric.value.length - 1; i >= 0; i--) {
     if (time >= musicLyric.value[i].time) {
       lyricIndex.value = i
@@ -124,7 +123,7 @@ const handleLyricScroll = async (time) => {
 
 // 监听time
 watch(()=> unref(timer).time, (newValue) => {
-  handleLyricScroll(newValue)
+  handleLyricActive(newValue)
 })
 
 // 为何额外监听 lyricIndex 进行滚动呢
@@ -164,7 +163,7 @@ watch(
   --font-color: #063064;
  
   width: 800px;
-  height: 600px;
+  // height: 600px;
   min-height: 100%;
   margin: 4.5rem auto;
   // padding: 4.5rem 0;
@@ -178,12 +177,13 @@ watch(
 
   &__wrap{
     height: 100%;
+    padding: 1rem 1.5rem;
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
     position: relative;
-    z-index: 999;
+    z-index: 2;
 
     .music-item {
       width: 235px;
@@ -356,7 +356,7 @@ watch(
           display: flex;
           flex-direction: column;
           align-items: center;
-          overflow: hidden;
+          overflow: scroll;
           position: relative;
 
           span {
@@ -366,6 +366,7 @@ watch(
 
           .active {
             color: #42b883;
+            font-weight: 500;
             transform: scale(1.08);
           }
         }
@@ -399,51 +400,81 @@ watch(
             width: 0%;
             height: 6px;
             position: absolute;
-            background-color: #bae5f2;
+            background-color: #0ef5da;
             border-radius: 5px;
+
+            &::after {
+              content: '';
+              position: absolute;
+              top: -4px;
+              right: -4px;
+              background: #000;
+              width: 10px;
+              height: 10px;
+            }
           }
         }
       }
     }
   }
-}
 
-.bubble {
-  position: absolute;
-  border-radius: 50%;
-  z-index: 1;
-}
+  .bubble {
+    position: absolute;
+    border-radius: 50%;
+    z-index: 1;
+  }
 
-.pink-bubble {
-  width: 460px;
-  height: 460px;
-  right: -160px;
-  top: -110px;
-  background-color: var(--pink-bubble);
-}
+  .pink-bubble {
+    width: 460px;
+    height: 460px;
+    right: -160px;
+    top: -110px;
+    background-color: var(--pink-bubble);
+  }
 
-.blue-bubble {
-  width: 520px;
-  height: 520px;
-  left: -30px;
-  top: 345px;
-  background-color: var(--blue-bubble);
-}
+  .blue-bubble {
+    width: 520px;
+    height: 520px;
+    left: -30px;
+    top: 345px;
+    background-color: var(--blue-bubble);
+  }
 
-.small-b-bubble {
-  width: 50px;
-  height: 50px;
-  right: 40px;
-  bottom: 85px;
-  background-color: var(--small-b-bubble);
-}
+  .small-b-bubble {
+    width: 50px;
+    height: 50px;
+    right: 40px;
+    bottom: 85px;
+    background-color: var(--small-b-bubble);
+  }
 
-.small-p-bubble {
-  width: 105px;
-  height: 105px;
-  left: -45px;
-  top: 140px;
-  background-color: var(--pink-bubble);
+  .small-p-bubble {
+    width: 105px;
+    height: 105px;
+    left: -45px;
+    top: 140px;
+    background-color: var(--pink-bubble);
+  }
+
+  @media screen and (max-width: 992px) {
+    width: 100%;
+
+    &__wrap{ 
+      flex-direction: column;
+    }
+
+    .pink-bubble {
+      transform: scale(0.8);
+    }
+    .blue-bubble {
+      top: 485px;
+      left: -115px;
+      transform: scale(0.8);
+    }
+    .small-b-bubble {
+      right: -10px;
+    }
+  }
 }
 
 @keyframes rotateImg {
