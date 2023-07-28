@@ -61,7 +61,7 @@ import { EffectFade } from 'swiper'
 let modules = [EffectFade]
 
 
-const props = defineProps(['progressDom', 'startPosition'])
+const props = defineProps(['progressDom'])
 
 const emits = defineEmits(['update-timer', 'update-duration', 'change-music'])
 
@@ -144,18 +144,11 @@ const onNext = () => {
   playerSkip('next')
 }
 
-watch(() => unref(props).startPosition, (newValue) => {
-  playerJump(newValue)
+defineExpose({ playerJump })
+
+onMounted(() => {
+  onPlay()
 })
-
-// onMounted(() => {
-//   window.addEventListener('click', handleClickOnce)
-// })
-
-// const handleClickOnce = () => {
-//   onPlay()
-//   window.removeEventListener('click', handleClickOnce)
-// }
 </script>
 <style lang="scss" scoped>
 

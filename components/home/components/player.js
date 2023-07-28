@@ -1,4 +1,4 @@
-import { Howl } from 'howler'
+import { Howl, Howler } from 'howler'
 import music1 from '~/assets/audio/yinweini.mp4'
 import music2 from '~/assets/audio/toutou.mp4'
 import music3 from '~/assets/audio/lalala.mp4'
@@ -19,8 +19,6 @@ export function useMusicPlayer(props, emits) {
   // 播放器是否暂停
   const playerIsPaused = ref(true)
 
-  // playingMusic.value = musicList.value[playingIndex.value]
-
  /**
    * @description 播放
    * @param mode 模式，'new'播放新的音乐
@@ -30,7 +28,6 @@ export function useMusicPlayer(props, emits) {
        // 播放器实例
        playerHowl.value = new Howl({
         src: playingMusic.value,
-        // autoplay: true,
         volume: 0.8,
         loop: true,
         // html5: true,
@@ -38,7 +35,6 @@ export function useMusicPlayer(props, emits) {
         // mute: true,
         onplay: function() {
           // 根据传入的dom更新音乐时长
-          // props.durationDom.innerHTML = formatTime(Math.round(playerHowl.value.duration()))
           emits('update-duration', formatTime(Math.round(playerHowl.value.duration())))
           // 更新音乐进度条
           requestAnimationFrame(step)
@@ -86,7 +82,6 @@ export function useMusicPlayer(props, emits) {
     if (playerHowl.value) {
       playerPause()
     }
-    // playingMusic.value = musicList.value[index]
     // 播放新的音乐
     playerPlay('new') 
   }
@@ -119,7 +114,6 @@ export function useMusicPlayer(props, emits) {
    */
   const step = () => {
     const seek = playerHowl.value.seek() || 0
-    // props.timerDom.innerHTML = formatTime(Math.round(seek))
     const timeInfo = {
       time: seek,
       formatTime: formatTime(Math.round(seek))
@@ -137,8 +131,8 @@ export function useMusicPlayer(props, emits) {
    * @return {String} 格式化的时间
    */
   const formatTime = (secs) => {
-    var minutes = Math.floor(secs / 60) || 0;
-    var seconds = (secs - minutes * 60) || 0;
+    const minutes = Math.floor(secs / 60) || 0;
+    const seconds = (secs - minutes * 60) || 0;
     return minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
   }
 

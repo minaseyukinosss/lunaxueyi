@@ -20,7 +20,6 @@
         </div>
         <music-bar ref="musicBarRef" 
           :progress-dom="progressRef"
-          :start-position="percent"
           @update-timer="onUpdateTimer"
           @update-duration="onUpdateDuration"
           @change-music="onChangeMusic"
@@ -161,12 +160,11 @@ watch(
 // 实现进度条跳转播放
 const progressInnerRef = ref() 
 
-// 播放位置的百分比
-const percent = ref(0)
-
 // 点击进度条 计算跳转的位置
 const onClickProgress = (e) => {
-  percent.value = e.offsetX / unref(progressInnerRef).offsetWidth
+  // 播放位置的百分比
+  const percent = e.offsetX / unref(progressInnerRef).offsetWidth
+  musicBarRef.value.playerJump(percent)
 }
 </script>
 
