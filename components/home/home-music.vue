@@ -19,7 +19,8 @@
           <div class="menu-line"></div>
         </div>
         <music-bar ref="musicBarRef" 
-          :progress-dom="progressRef" 
+          :progress-dom="progressRef"
+          :start-position="percent"
           @update-timer="onUpdateTimer"
           @update-duration="onUpdateDuration"
           @change-music="onChangeMusic"
@@ -57,7 +58,10 @@
           </div>
           <!-- 播放进度条 -->
           <div class="music-progress">
-            <div class="progress" ref="progressRef"></div>
+            <div class="music-progress__inner" ref="progressInnerRef" @click="onClickProgress">
+              <div class="music-progress__load"></div>
+              <div class="music-progress__play" ref="progressRef"></div>
+            </div>
           </div>
           <div class="music-duration">
             <div class="timer mr-1">{{ timer.formatTime }}</div>
@@ -153,7 +157,19 @@ watch(
       albumImgRef.value.style.animationPlayState = 'paused'
     }
   })
+
+// 实现进度条跳转播放
+const progressInnerRef = ref() 
+
+// 播放位置的百分比
+const percent = ref(0)
+
+// 点击进度条 计算跳转的位置
+const onClickProgress = (e) => {
+  percent.value = e.offsetX / unref(progressInnerRef).offsetWidth
+}
 </script>
+
 <style lang="scss" scoped>
 .music {
   // 泡泡颜色
@@ -393,25 +409,27 @@ watch(
         .music-progress {
           height: 6px;
           margin: 20px 10px 10px;
-          background-color: rgba(0, 0, 0, 0.1);
-          border-radius: 5px;
-          position: relative;
-          .progress {
+
+          &__inner {
+            position: relative;
+            height: 6px;
+            cursor: pointer;
+          }
+
+          &__load {
+            width: 100%;
+            height: 6px;
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+          }
+
+          &__play {
             width: 0%;
             height: 6px;
             position: absolute;
             background-color: #0ef5da;
             border-radius: 5px;
-
-            &::after {
-              content: '';
-              position: absolute;
-              top: -4px;
-              right: -4px;
-              background: #000;
-              width: 10px;
-              height: 10px;
-            }
           }
         }
       }

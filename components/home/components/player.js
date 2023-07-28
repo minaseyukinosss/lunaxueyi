@@ -19,7 +19,6 @@ export function useMusicPlayer(props, emits) {
   // 播放器是否暂停
   const playerIsPaused = ref(true)
 
-
   // playingMusic.value = musicList.value[playingIndex.value]
 
  /**
@@ -31,9 +30,12 @@ export function useMusicPlayer(props, emits) {
        // 播放器实例
        playerHowl.value = new Howl({
         src: playingMusic.value,
+        // autoplay: true,
         volume: 0.8,
         loop: true,
+        // html5: true,
         preload: true,
+        // mute: true,
         onplay: function() {
           // 根据传入的dom更新音乐时长
           // props.durationDom.innerHTML = formatTime(Math.round(playerHowl.value.duration()))
@@ -89,6 +91,19 @@ export function useMusicPlayer(props, emits) {
     playerPlay('new') 
   }
 
+  function playerJump(percent) {
+    // 判断是否已有播放器实例
+    if (unref(playerHowl)) {
+      // 存在直接请求seek函数
+      seek(percent)
+    } else {
+      // 不存在先生成一个
+      playerPlay()
+      // 再请求seek函数
+      seek(percent)
+    }
+  }
+
   /**
    * @description 根据进度条百分比设置当前音乐播放的位置
    * @param  {Number} percent 歌曲跳过的百分比
@@ -133,7 +148,7 @@ export function useMusicPlayer(props, emits) {
   // 获取当前播放器是否为暂停状态
   const getPlayerIsPaused = computed(() => unref(playerIsPaused))
 
-  return { getPlayingMusicIndex, getPlayerIsPaused, playerSkipTo, playerPlay, playerPause, playerSkip }
+  return { getPlayingMusicIndex, getPlayerIsPaused, playerSkipTo, playerPlay, playerPause, playerSkip, playerJump }
 }
  
 

@@ -7,7 +7,6 @@
   <div class="music-bar">
     <div class="album-list">
       <Swiper
-        ref="swiperRef"
         loop
         :effect="'coverflow'"
         :pagination="{
@@ -62,11 +61,19 @@ import { EffectFade } from 'swiper'
 let modules = [EffectFade]
 
 
-const props = defineProps(['progressDom'])
+const props = defineProps(['progressDom', 'startPosition'])
 
-const emits = defineEmits(['update-timer','update-duration','change-music'])
+const emits = defineEmits(['update-timer', 'update-duration', 'change-music'])
 
-const { getPlayingMusicIndex,getPlayerIsPaused, playerSkipTo, playerPlay, playerPause, playerSkip } = useMusicPlayer(props, emits)
+const { 
+  getPlayingMusicIndex,
+  getPlayerIsPaused, 
+  playerSkipTo, 
+  playerPlay, 
+  playerPause, 
+  playerSkip,
+  playerJump,
+} = useMusicPlayer(props, emits)
 
 const playerImg = ref()
 
@@ -137,6 +144,18 @@ const onNext = () => {
   playerSkip('next')
 }
 
+watch(() => unref(props).startPosition, (newValue) => {
+  playerJump(newValue)
+})
+
+// onMounted(() => {
+//   window.addEventListener('click', handleClickOnce)
+// })
+
+// const handleClickOnce = () => {
+//   onPlay()
+//   window.removeEventListener('click', handleClickOnce)
+// }
 </script>
 <style lang="scss" scoped>
 
