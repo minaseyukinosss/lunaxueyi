@@ -51,8 +51,8 @@
   </div>
 </template>
 <script setup name="MusicBar">
-import { useMusicPlayer } from './player'
-import { albumList } from './const'
+import { useMusicPlayer } from '../hooks/player'
+import { albumList } from '../const'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
@@ -147,7 +147,7 @@ const onNext = () => {
 defineExpose({ playerJump })
 
 onMounted(() => {
-  onPlay()
+  // onPlay()
 })
 </script>
 <style lang="scss" scoped>
@@ -329,4 +329,4 @@ onMounted(() => {
     transform: rotate(360deg);
   }
 }
-</style>
+</style>../player../hooks/player

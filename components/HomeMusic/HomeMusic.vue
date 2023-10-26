@@ -1,3 +1,8 @@
+<!--
+ * @Author: junjie qiu
+ * @Date: 2023-07-14 14:12:35
+ * @Description: 首页音乐播放器
+-->
 <template>
   <link
   href="https://fonts.googleapis.com/css?family=Roboto:400,500,700&display=swap"
@@ -73,9 +78,9 @@
   </div>
 </template>
 <script setup name="HomeMusic">
-import musicBar from './components/music-bar.vue'
-import { albumList } from './components/const'
-import { lyricsList } from './components/lyrics'
+import musicBar from './src/components/MusicBar.vue'
+import { albumList } from './src/const'
+import { lyricsList } from './src/lyrics'
 
 const musicBarRef = ref()
 const progressRef = ref()
@@ -501,4 +506,4 @@ const onClickProgress = (e) => {
     transform: rotateZ(360deg);
   }
 }
-</style>
+</style>./lyrics./src/components/const./src/lyrics
