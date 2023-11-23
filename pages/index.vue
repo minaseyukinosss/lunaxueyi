@@ -9,7 +9,7 @@
       <!-- 音乐播放器 -->
       <HomeMusic />
       <!-- 画廊 -->
-      <Gallery />
+      <!-- <Gallery /> -->
     </div>
 </template>
 

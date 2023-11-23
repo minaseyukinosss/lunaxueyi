@@ -376,6 +376,7 @@ const onClickProgress = (e) => {
           flex-direction: column;
           align-items: center;
           overflow: scroll;
+          scroll-behavior: smooth;
           position: relative;
 
           span {
@@ -506,4 +507,10 @@ const onClickProgress = (e) => {
     transform: rotateZ(360deg);
   }
 }
-</style>./lyrics./src/components/const./src/lyrics
+
+/* 隐藏滚动条但保持滚动功能 */
+/* Webkit (Safari/Chrome) */
+::-webkit-scrollbar {
+    display: none;
+}
+</style>
