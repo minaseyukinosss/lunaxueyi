@@ -8,12 +8,16 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.2.3",
+    "@nuxt/devtools": "latest",
+    "nuxt": "^3.8.2",
     "nuxt-windicss": "^2.6.0",
     "sass": "^1.59.2",
-    "sass-loader": "^13.2.0"
+    "sass-loader": "^13.2.0",
+    "vue": "^3.3.12",
+    "vue-router": "^4.2.5"
   },
   "dependencies": {
+    "gsap": "^3.12.4",
     "howler": "^2.2.3",
     "nuxt-icon": "^0.3.3",
     "swiper": "^8.4.4",

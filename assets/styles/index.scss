@@ -67,36 +67,3 @@ a {
 .wow {
   visibility: hidden;
 }
-
-// :root {
-//   // todo 多个尺寸
-//   @media screen and (min-width: 1000px) {
-//     font-size: 6.95vw;
-//   }
-//   @media screen and (max-width: 750px) {
-//     font-size: 13.333333vw;
-//   }
-// }
-
-// :root {
-//   @media screen and (min-width: 1201px) {
-//     --container-width: 1140px;
-//   }
-
-//   @media screen and (max-width: 1200px) {
-//     // font-size: 13px;
-//     --container-width: 1040px;
-//   }
-
-//   @media screen and (max-width: 1000px) {
-//     // font-size: 12px;
-//     --container-width: calc(100vw - 2.8rem);
-//   }
-
-//   @media screen and (max-width: 765px) {
-//     --container-width: calc(100vw - 2rem);
-//     h5 {
-//       // font-size: 1.45rem !important;
-//     }
-//   }
-// }

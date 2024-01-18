@@ -1,3 +1,8 @@
+/*
+ * @Author: junjie qiu
+ * @Date: 2023-03-01 00:04:07
+ * @Description: file content
+ */
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
@@ -49,7 +54,7 @@ export default defineNuxtConfig({
     },
   },
   build: {
-    transpile: ['swiper'],
+    transpile: ['swiper', 'gsap'],
   },
   devServer: {
     host: '0.0.0.0'

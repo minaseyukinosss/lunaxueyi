@@ -408,7 +408,7 @@ const onClickSideNavBar = () => {
 .sticky {
   position: fixed;
   z-index: 3;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 1);
   box-shadow: 0px 12px 25px 0px rgba(0, 0, 0, 0.1);
   transition: all 0.5s ease-out 0s;
   // backdrop-filter: blur(15px);

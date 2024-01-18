@@ -6,6 +6,7 @@
 <template>
     <div class="index">
       <!-- <Clouds class="home-img"/> -->
+      <HomeIndex />
       <!-- 音乐播放器 -->
       <HomeMusic />
       <!-- 画廊 -->
