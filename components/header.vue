@@ -33,7 +33,8 @@
 <script setup>
 // 设置导航变量数组：名字，地址
 const NAVBAR_ARR = [
-  { name: '首页', to: '/' },
+  { name: '首页', to: '/#index' },
+  { name: '音乐盒', to: '/#music' },
 ]
 
 const route = useRoute()
@@ -75,7 +76,7 @@ const onClickNavBar = () => {
   for (let i = 0; i < nodeList.length; i++) {
     let currLink = nodeList[i]
     const navbarItem = NAVBAR_ARR[i]
-    if (route.href === navbarItem.to) {
+    if (route.href === navbarItem.to || (navbarItem.to === '/#index' && route.href === '/')) {
       currLink.classList.add('header__navbar-link--active')
     } else {
       currLink.classList.remove('header__navbar-link--active')
@@ -86,9 +87,9 @@ const onClickNavBar = () => {
 const onScroll = () => { 
   let header = document.getElementById('header')
   let headerOffsetTop = header.offsetTop
-
+  console.log(window.scrollY)
   if (
-    (window.pageYOffset > headerOffsetTop || route.href !== '/' ) ||
+    ((route.href !== '/' && route.href !== '/#index') && window.scrollY !== 0) ||
     window.innerHeight >= window.innerWidth ||
     window.innerWidth <= 992
   ) {
@@ -112,7 +113,7 @@ const onClickSideNavBar = () => {
   for (let i = 0; i < nodeList.length; i++) {
     let currLink = nodeList[i]
     const navbarItem = NAVBAR_ARR[i]
-    if (route.href === navbarItem.to) {
+    if (route.href === navbarItem.to || (navbarItem.to === '/#index' && route.href === '/')) {
       currLink.classList.add('header__panel-links__item--active')
     } else {
       currLink.classList.remove('header__panel-links__item--active')
@@ -168,10 +169,9 @@ const onClickSideNavBar = () => {
 
   &__navbar-link {
     font-size: 0.9rem;
-    // color: #676b73;
-    padding: 0.5rem;
-    padding-right: 0.25rem;
+    padding: 0.5rem 0.75rem;
     margin-left: 4rem;
+    border-radius: 15px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -186,16 +186,7 @@ const onClickSideNavBar = () => {
       text-decoration: none;
       font-size: 0.9rem;
       transition: all 0.3s ease-out 0s;
-      &::after {
-        position: absolute;
-        top: 1.5rem;
-        left: 0;
-        width: 0;
-        height: 0.15rem;
-        border-radius: 0.375rem;
-        background-color: #fff;
-        content: '';
-      }
+
       &:hover {
         font-weight: bold;
       }
@@ -425,8 +416,6 @@ const onClickSideNavBar = () => {
 }
 
 .header__navbar-link--active {
-  a::after {
-    width: 100%;
-  }
+  background-color: hsla(0,0%,100%,.5);
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
- <div class="home-index">
+ <div class="home-index" id="index">
   <div class="home-index__wrap" ref="main">
     <div class="home-index__wrap-info">
       <span class="info-text">HAPPY<span>WISH</span></span>
@@ -159,8 +159,9 @@ onUnmounted(() => {
   width: 100%;
   height: 100%;
   z-index: 1;
-  opacity: 0.9;
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAE1JREFUOE9j5BaRuvnr+2cGNk5eBhighM8IMhBuEhUYKAZS4jKQW0D6aeNCargMFge0cSE1Ync0DCGhSI3Ypk0sU8Nlo+lwtDykoOQGAAxCqvFBleXSAAAAAElFTkSuQmCC) repeat 0 0/0.2rem 0.2rem;
+  background: linear-gradient(0deg,rgba(0,0,0,.2),rgba(0,0,0,.2));
+  // opacity: 0.9;
+  // background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAAAXNSR0IArs4c6QAAAE1JREFUOE9j5BaRuvnr+2cGNk5eBhighM8IMhBuEhUYKAZS4jKQW0D6aeNCargMFge0cSE1Ync0DCGhSI3Ypk0sU8Nlo+lwtDykoOQGAAxCqvFBleXSAAAAAElFTkSuQmCC) repeat 0 0/0.2rem 0.2rem;
 }
 
 @keyframes scrollmove {

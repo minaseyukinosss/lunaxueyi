@@ -12,7 +12,7 @@
     href="https://fonts.googleapis.com/css?family=Fjalla+One&display=swap"
     rel="stylesheet"
   />
-  <div class="music">
+  <div class="music" id="music">
     <div class="bubble pink-bubble"></div>
     <div class="bubble blue-bubble"></div>
     <div class="bubble small-p-bubble"></div>
@@ -385,7 +385,7 @@ const onClickProgress = (e) => {
           }
 
           .active {
-            color: #42b883;
+            color: #ffb6c1;
             font-weight: 500;
             transform: scale(1.08);
           }
