@@ -7,3 +7,9 @@ node_modules
 .output
 .env
 dist
+
+# Cursor
+.cursor
+.cursor-cache
+.cursor-settings.json
+
