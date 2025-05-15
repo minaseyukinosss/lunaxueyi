@@ -11,6 +11,7 @@
       <HomeMusic />
       <!-- 画廊 -->
       <!-- <Gallery /> -->
+      <!-- <Profile /> -->
     </div>
 </template>
 

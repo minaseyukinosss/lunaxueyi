@@ -22,7 +22,7 @@
       </Swiper>
     </div>
     <div class="music-list">
-      <div class="music-item" v-for="(item,index) in albumList" :key="index" @click="playMusic(index)">
+      <div class="music-item" v-for="(item,index) in albumList" :key="index" @click="playMusic(index)" :class="{ active: index === playingMusicIndex }">
         <img class="music-img" :src="item.img">
         <div class="music-info">
           <span class="music-name">{{ item.name }}</span>
@@ -78,6 +78,9 @@ const {
 const playerImg = ref()
 
 const isPaused = computed(() => unref(getPlayerIsPaused))
+
+// Add playingMusicIndex to track current song
+const playingMusicIndex = computed(() => unref(getPlayingMusicIndex))
 
 // 为所有组件共享播放器状态
 const { setPausedStatus } = usePausedStatus('pausedStatus')
@@ -144,10 +147,20 @@ const onNext = () => {
   playerSkip('next')
 }
 
-defineExpose({ playerJump })
+// 暴露获取音频元素的方法
+const getAudioElement = () => {
+  return audio.value
+}
+
+// 暴露方法给父组件
+defineExpose({
+  playerJump,
+  getAudioElement
+})
 
 onMounted(() => {
-  // onPlay()
+  // playerSkipTo(0)
+  // playerPlay()
 })
 </script>
 <style lang="scss" scoped>
@@ -169,18 +182,40 @@ onMounted(() => {
   .music-list {
     display: flex;
     flex-direction: column;
+    padding: 0 4px;
 
     .music-item {
       display: flex;
-      padding: 8px 16px;
+      padding: 6px 12px;
       flex-direction: row;
       align-items: center;
       cursor: pointer;
-      transition: all 0.3s;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+      margin: 2px 0;
+      position: relative;
+
+      &.active {
+        background-color: rgba(187, 230, 243, 0.3);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+          width: 3px;
+          height: 60%;
+          background-color: #00bfff;
+          border-radius: 0 4px 4px 0;
+        }
+      }
 
       &:hover {
-        transform: scale(1.02);
-        // box-shadow: -8px 10px 3px -11px rgba(0, 0, 0, 0.4);
+        transform: scale(1.01);
+        background-color: rgba(187, 230, 243, 0.5);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       }
 
       .music-img {
@@ -202,14 +237,14 @@ onMounted(() => {
           font-family: "Roboto", sans-serif;
           color: var(--font-color);
           font-weight: 500;
-          font-size: 10px;
+          font-size: 12px;
         }
 
         .music-desc {
           font-family: "Roboto", sans-serif;
           color: #d0d2e5;
           font-weight: 400;
-          font-size: 12px;
+          font-size: 10px;
           overflow: hidden;
           text-overflow: ellipsis;
           white-space: nowrap;
@@ -261,20 +296,26 @@ onMounted(() => {
       width: 0;
       display: flex;
       flex-direction: column;
-      padding: 8px 30px 8px 15px;
+      padding: 12px 30px 8px 15px;
 
       .song-name {
         font-family: "Roboto", sans-serif;
         color: var(--font-color);
         font-weight: 500;
-        font-size: 10px;
+        font-size: 12px;
+        margin-bottom: 4px;
+        line-height: 1.2;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
       }
 
       .song-desc {
         font-family: "Roboto", sans-serif;
         color: #6590ad;
         font-weight: 400;
-        font-size: 12px;
+        font-size: 11px;
+        line-height: 1.2;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;

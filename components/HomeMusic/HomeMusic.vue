@@ -139,9 +139,10 @@ watch(()=> unref(timer).time, (newValue) => {
 // 但滚动事件实际上是依赖于 lyricIndex 的变化，监听 lyricIndex 变化进行滚动会更好
 watch(() => unref(lyricIndex), (index) => {
   if(index < 3) return
+  const offset = 30; // 固定偏移量
   lyricsContainer.value.scrollTo({
-    top: lyricRefs.value[unref(lyricIndex) - 2].offsetTop,
-    behavior: "smooth" // 使用平滑滚动效果
+    top: lyricRefs.value[unref(lyricIndex) - 2].offsetTop - offset,
+    behavior: "smooth"
   })
 })
 
@@ -175,26 +176,22 @@ const onClickProgress = (e) => {
 
 <style lang="scss" scoped>
 .music {
-  // 泡泡颜色
+  // 恢复原始配色
   --blue-bubble: #bbe6f3;
   --small-b-bubble: #bae5f2;
   --pink-bubble: #ebc7e5;
   --font-color: #063064;
  
   width: 800px;
-  // height: 600px;
   min-height: 100%;
   margin: 4.5rem auto;
-  // padding: 4.5rem 0;
   position: relative;
   overflow: hidden;
   background-color: #f3fcfd;
   border-radius: 6px;
-  -webkit-box-shadow: 1px 2px 29px 2px rgba(220, 244, 250, 1);
-  -moz-box-shadow: 1px 2px 29px 2px rgba(220, 244, 250, 1);
   box-shadow: 1px 2px 29px 2px rgba(220, 244, 250, 1);
 
-  &__wrap{
+  &__wrap {
     height: 100%;
     padding: 1rem 1.5rem;
     display: flex;
@@ -210,13 +207,17 @@ const onClickProgress = (e) => {
       border-radius: 30px;
       box-shadow: 0 6px 16px 0 rgba(0, 0, 0, 0.08), 0 3px 6px -4px rgba(0, 0, 0, 0.12),
       0 9px 28px 8px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s ease;
+      
+      // &:hover {
+      //   transform: translateY(-5px);
+      // }
     }
 
     .music-menu {
       display: flex;
       flex-direction: column;
       background-color: #fff;
-      // box-shadow: 2px 14px 40px -20px rgba(0, 0, 0, 0.2);
 
       .header {
         font-family: "Fjalla One", sans-serif;
@@ -233,6 +234,12 @@ const onClickProgress = (e) => {
           width: 25px;
           border-radius: 50px;
           position: relative;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            transform: scale(1.1);
+          }
+          
           &:before {
             content: "";
             position: absolute;
@@ -259,7 +266,7 @@ const onClickProgress = (e) => {
       display: flex;
       flex-direction: column;
       background-color: #bbe6f3;
-      // box-shadow: -6px 14px 40px -20px rgba(0, 0, 0, 0.2);
+      
       .player-header {
         display: flex;
         margin-top: 25px;
@@ -273,6 +280,11 @@ const onClickProgress = (e) => {
           margin-left: 20px;
           border-radius: 10px;
           background-color: #043165;
+          transition: all 0.3s ease;
+
+          &:hover {
+            transform: scale(1.1);
+          }
 
           &::before {
             content: '';
@@ -286,6 +298,7 @@ const onClickProgress = (e) => {
             transform: rotate(-30deg);
           }
         }
+        
         .now-play {
           font-family: "Roboto", sans-serif;
           color: var(--font-color);
@@ -302,9 +315,15 @@ const onClickProgress = (e) => {
             height: 3px;
             background-color: #043165;
             margin-right: 5px;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              transform: scale(1.2);
+            }
           }
         }
       }
+      
       .player-content {
         flex: 1;
         height: 0;
@@ -313,6 +332,7 @@ const onClickProgress = (e) => {
         border-radius: 30px;
         box-shadow: 2px 14px 40px -20px rgba(0, 0, 0, 0.2);
         position: relative;
+        overflow: hidden;
 
         .album-img {
           width: 160px;
@@ -337,6 +357,7 @@ const onClickProgress = (e) => {
           position: absolute;
           top: 65px;
           left: 13px;
+          animation: pulse 3s ease-in-out infinite;
         }
 
         .album-decorate__small {
@@ -347,6 +368,7 @@ const onClickProgress = (e) => {
           position: absolute;
           top: 45px;
           left: 29px;
+          animation: pulse 3s ease-in-out infinite 0.5s;
         }
 
         .song-detail {
@@ -354,24 +376,26 @@ const onClickProgress = (e) => {
           display: flex;
           flex-direction: column;
           align-items: center;
+          
           .song-name {
             font-family: "Fjalla One", sans-serif;
             color: #063064;
             font-weight: 500;
             font-size: 16px;
-          }
-
-          .song-desc {
-            margin-top: 6px;
-            font-family: "Roboto", sans-serif;
-            color: #aeb8cc;
-            font-weight: 400;
-            font-size: 12px;
+            transition: all 0.3s ease;
+            
+            &:hover {
+              transform: scale(1.05);
+            }
           }
         }
 
         .music-lyrics {
-          height: 120px;
+          height: 135px;
+          padding: 20px 15px;
+          // margin-top: -30px;
+          mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
+          -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 10%, #000 90%, transparent 100%);
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -381,13 +405,15 @@ const onClickProgress = (e) => {
 
           span {
             font-size: 12px;
-            transition: transform 0.3s;
+            transition: all 0.3s ease;
+            padding: 2px 0;
           }
 
           .active {
-            color: #ffb6c1;
+            color: #FFB6C1;
             font-weight: 500;
             transform: scale(1.08);
+            text-shadow: 0 0 8px rgba(255, 182, 193, 0.3);
           }
         }
 
@@ -399,10 +425,12 @@ const onClickProgress = (e) => {
           font-size: 9px;
           font-weight: 500;
           color: #c9cade;
+          margin-top: 10px;
 
           .timer {
             color: #063064;
           }
+          
           .arrow {
             transform: rotate(-45deg);
             font-size: 12px;
@@ -418,22 +446,39 @@ const onClickProgress = (e) => {
             position: relative;
             height: 6px;
             cursor: pointer;
+            border-radius: 3px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.02);
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
           }
 
           &__load {
             width: 100%;
             height: 6px;
             position: absolute;
-            background-color: rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
+            background-color: rgba(0, 0, 0, 0.05);
+            border-radius: 3px;
           }
 
           &__play {
             width: 0%;
             height: 6px;
             position: absolute;
-            background-color: #0ef5da;
-            border-radius: 5px;
+            background: linear-gradient(90deg, #0ef5da, #00bfff);
+            border-radius: 3px;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 10px rgba(14, 245, 218, 0.5);
+            
+            &::after {
+              content: '';
+              position: absolute;
+              top: 0;
+              right: 0;
+              width: 10px;
+              height: 100%;
+              background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8));
+              filter: blur(2px);
+            }
           }
         }
       }
@@ -444,6 +489,8 @@ const onClickProgress = (e) => {
     position: absolute;
     border-radius: 50%;
     z-index: 1;
+    opacity: 0.8;
+    transition: all 0.3s ease;
   }
 
   .pink-bubble {
@@ -452,6 +499,7 @@ const onClickProgress = (e) => {
     right: -160px;
     top: -110px;
     background-color: var(--pink-bubble);
+    animation: float 6s ease-in-out infinite;
   }
 
   .blue-bubble {
@@ -460,6 +508,7 @@ const onClickProgress = (e) => {
     left: -30px;
     top: 345px;
     background-color: var(--blue-bubble);
+    animation: float 8s ease-in-out infinite 1s;
   }
 
   .small-b-bubble {
@@ -468,6 +517,7 @@ const onClickProgress = (e) => {
     right: 40px;
     bottom: 85px;
     background-color: var(--small-b-bubble);
+    animation: float 4s ease-in-out infinite 2s;
   }
 
   .small-p-bubble {
@@ -476,13 +526,16 @@ const onClickProgress = (e) => {
     left: -45px;
     top: 140px;
     background-color: var(--pink-bubble);
+    animation: float 5s ease-in-out infinite 1.5s;
   }
 
   @media screen and (max-width: 992px) {
     width: 100%;
+    margin: 2rem auto;
 
-    &__wrap{ 
+    &__wrap { 
       flex-direction: column;
+      gap: 2rem;
     }
 
     .pink-bubble {
@@ -508,8 +561,27 @@ const onClickProgress = (e) => {
   }
 }
 
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.7;
+  }
+}
+
 /* 隐藏滚动条但保持滚动功能 */
-/* Webkit (Safari/Chrome) */
 ::-webkit-scrollbar {
     display: none;
 }

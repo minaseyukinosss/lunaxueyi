@@ -5,7 +5,7 @@
       <span class="info-text">HAPPY<span>WISH</span></span>
       <span class="info-text">BIRTHDAY<span>HEALTH</span></span>
       <span class="info-text">TO<span>HAPPY</span></span>
-      <span class="info-text">LUO XUEYI<span><a>SUCCESS</a></span></span>
+      <span class="info-text">LUNA XUEYI<span><a>SUCCESS</a></span></span>
     </div>
     <div class="scroll-btn">
       <Icon class="scroll-btn__mouse" name="gg:mouse" />
