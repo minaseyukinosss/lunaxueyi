@@ -8,6 +8,8 @@ on:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -32,15 +34,18 @@ jobs:
 
       - name: Prepare deployment
         run: |
-          # 在构建输出目录中创建 .nojekyll 文件
+          # 确保构建输出目录存在
+          if [ ! -d ".output/public" ]; then
+            echo "Error: Build output directory .output/public does not exist"
+            exit 1
+          fi
+          
+          # 创建 .nojekyll 文件
           touch .output/public/.nojekyll
-          # 在根目录也创建 .nojekyll 文件
-          touch .nojekyll
+          
           # 列出文件以验证
           echo "Listing build output directory:"
           ls -la .output/public
-          echo "Listing root directory:"
-          ls -la
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
