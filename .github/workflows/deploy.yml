@@ -28,14 +28,19 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Create .nojekyll file
+      - name: Debug - List build output
         run: |
+          echo "Listing .output/public directory:"
+          ls -la .output/public
+          echo "Creating .nojekyll file"
           touch .output/public/.nojekyll
-          echo "Created .nojekyll file"
+          echo "Listing after creating .nojekyll:"
+          ls -la .output/public
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: .output/public
           branch: gh-pages
-          clean: true 
+          clean: true
+          commit-message: "Deploy: ${{ github.sha }}" 
