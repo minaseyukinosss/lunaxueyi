@@ -28,12 +28,14 @@ jobs:
       - name: Build
         run: pnpm run build
 
+      - name: Create .nojekyll file
+        run: |
+          touch .output/public/.nojekyll
+          echo "Created .nojekyll file"
+
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: .output/public
           branch: gh-pages
-          clean: true
-
-      - name: Disable Jekyll
-        run: touch .nojekyll 
+          clean: true 
