@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
@@ -28,14 +30,17 @@ jobs:
       - name: Build
         run: pnpm run build
 
-      - name: Debug - List build output
+      - name: Prepare deployment
         run: |
-          echo "Listing .output/public directory:"
-          ls -la .output/public
-          echo "Creating .nojekyll file"
+          # 在构建输出目录中创建 .nojekyll 文件
           touch .output/public/.nojekyll
-          echo "Listing after creating .nojekyll:"
+          # 在根目录也创建 .nojekyll 文件
+          touch .nojekyll
+          # 列出文件以验证
+          echo "Listing build output directory:"
           ls -la .output/public
+          echo "Listing root directory:"
+          ls -la
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
