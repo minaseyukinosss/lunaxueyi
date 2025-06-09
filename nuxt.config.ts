@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   ],
   css: ['@/assets/styles/index.scss'],
   app: {
-    baseURL: '/luoxueyi/',
+    baseURL: '/',
     head: {
       htmlAttrs: {
         lang: 'zh',
